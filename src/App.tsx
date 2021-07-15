@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header/Header';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import Signin from "./components/Signin/Signin";
+import Signup from "./components/Signup/Signup";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Header/>
+            <Switch>
+                <Route exact path="/" render={() => <h1>Welcome to our store</h1>}/>
+                <Route exact path="/signin" render={() => <Signin/>}/>
+                <Route exact path="/signup" render={() => <Signup/>}/>
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
 export default App;
