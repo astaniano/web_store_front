@@ -16,7 +16,7 @@ const SignupForm = () => {
             last_name: '',
             email: '',
             password: '',
-            // passwordConfirm: '',
+            password_confirm: '',
         },
         validationSchema: Yup.object({
             first_name: Yup.string()
@@ -32,6 +32,13 @@ const SignupForm = () => {
                 .required('No password provided.')
                 .min(8, 'Password is too short - should be 8 chars minimum.')
                 .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+            password_confirm: Yup.string().when("password", {
+                is: (val: string | any[]) => (val && val.length > 0),
+                then: Yup.string().oneOf(
+                    [Yup.ref("password")],
+                    "Password does not match"
+                )
+            })
         }),
         onSubmit: async (values) => {
             // await authAPI.signUp(values);
@@ -81,14 +88,17 @@ const SignupForm = () => {
                 <div>{formik.errors.password}</div>
             ) : null}
 
-            {/*<label htmlFor="email">Confirm password</label>*/}
-            {/*<input*/}
-            {/*    id="passwordConfirm"*/}
-            {/*    name="passwordConfirm"*/}
-            {/*    type="password"*/}
-            {/*    onChange={formik.handleChange}*/}
-            {/*    value={formik.values.passwordConfirm}*/}
-            {/*/>*/}
+            <label htmlFor="email">Repeat password</label>
+            <input
+                id="password_confirm"
+                name="password_confirm"
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.password_confirm}
+            />
+            {formik.touched.password_confirm && formik.errors.password_confirm ? (
+                <div>{formik.errors.password_confirm}</div>
+            ) : null}
 
             <button type="submit">Submit</button>
         </form>
