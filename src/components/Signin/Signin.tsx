@@ -1,11 +1,12 @@
 import "../../App.css";
-import "./signin.module.css";
+// import "./signin.module.css";
 import { useFormik } from "formik";
 
 export default function Signin() {
     const formik = useFormik({
-        initialValues: { firstName: '',
-            lastName: '',
+        initialValues: {
+            first_name: '',
+            last_name: '',
             email: '', },
         onSubmit: values => {
             console.log(values);
@@ -21,7 +22,7 @@ export default function Signin() {
                   name="firstName"
                   type="text"
                   onChange={formik.handleChange}
-                  value={formik.values.firstName}
+                  value={formik.values.first_name}
               />
               <label htmlFor="lastName">Last Name</label>
               <input
@@ -29,7 +30,7 @@ export default function Signin() {
                   name="lastName"
                   type="text"
                   onChange={formik.handleChange}
-                  value={formik.values.lastName}
+                  value={formik.values.last_name}
               />
               <label htmlFor="email">Email Address</label>
               <input
