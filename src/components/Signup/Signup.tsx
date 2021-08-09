@@ -13,7 +13,7 @@ export default function Signup() {
 }
 
 const SignupForm = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState('');
 
     const formik = useFormik({
         initialValues: {
@@ -50,7 +50,13 @@ const SignupForm = () => {
             })
         }),
         onSubmit: async ({email, password, firstName, lastName}) => {
-            await authAPI.signUp(email, password, firstName, lastName);
+            const formData = new FormData();
+            formData.set('email', email);
+            formData.set('password', password);
+            formData.set('firstName', firstName);
+            formData.set('lastName', lastName);
+            formData.set('userPhoto', selectedFile);
+            await authAPI.signUp(formData);
         },
     });
 
@@ -113,7 +119,7 @@ const SignupForm = () => {
 
             <FileUploader
                 onFileSelectSuccess={(file: any) => setSelectedFile(file)}
-                onFileSelectError={({ error }: any) => alert(error)}
+                onFileSelectError={({ error }: {error: string}) => alert(error)}
             />
             <br/>
 

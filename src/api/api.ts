@@ -5,7 +5,7 @@ const instance = axios.create({
 });
 
 export const authAPI = {
-    signUp(email: string, password: string, firstName: string, lastName: string) {
-        return instance.post(`auth/signup`, {email, password, firstName, lastName});
+    signUp(data: FormData) {
+        return instance.post(`auth/signup`, data);
     },
 }

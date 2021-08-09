@@ -10,7 +10,7 @@ export const FileUploader = ({onFileSelectSuccess, onFileSelectError}: any) => {
             onFileSelectError({ error: "File size cannot exceed more than 1MB" });
         } else {
             setFileURL(URL.createObjectURL(file));
-            // onFileSelectSuccess(file);
+            onFileSelectSuccess(file);
         }
     };
 
