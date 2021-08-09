@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
 import '../../App.css'
 import {authAPI} from "../../api/api";
+import {FileUploader} from "../shared/FileUploader";
 
 export default function Signup() {
     return (
@@ -10,6 +13,8 @@ export default function Signup() {
 }
 
 const SignupForm = () => {
+    const [selectedFile, setSelectedFile] = useState(null);
+
     const formik = useFormik({
         initialValues: {
             firstName: '',
@@ -60,6 +65,7 @@ const SignupForm = () => {
             {formik.touched.firstName && formik.errors.firstName ? (
                 <div>{formik.errors.firstName}</div>
             ) : null}
+            <br/>
 
             <label htmlFor="lastName">Last Name</label>
             <input
@@ -70,6 +76,7 @@ const SignupForm = () => {
             {formik.touched.lastName && formik.errors.lastName ? (
                 <div>{formik.errors.lastName}</div>
             ) : null}
+            <br/>
 
             <label htmlFor="email">Email Address</label>
             <input
@@ -80,6 +87,7 @@ const SignupForm = () => {
             {formik.touched.email && formik.errors.email ? (
                 <div>{formik.errors.email}</div>
             ) : null}
+            <br/>
 
             <label htmlFor="password">Password</label>
             <input
@@ -90,19 +98,24 @@ const SignupForm = () => {
             {formik.touched.password && formik.errors.password ? (
                 <div>{formik.errors.password}</div>
             ) : null}
+            <br/>
 
             <label htmlFor="email">Repeat password</label>
             <input
                 id="passwordConfirm"
                 type="password"
-                name="passwordConfirm"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.passwordConfirm}
+                {...formik.getFieldProps('passwordConfirm')}
             />
             {formik.touched.passwordConfirm && formik.errors.passwordConfirm ? (
                 <div>{formik.errors.passwordConfirm}</div>
             ) : null}
+            <br/>
+
+            <FileUploader
+                onFileSelectSuccess={(file: any) => setSelectedFile(file)}
+                onFileSelectError={({ error }: any) => alert(error)}
+            />
+            <br/>
 
             <button type="submit">Submit</button>
         </form>
